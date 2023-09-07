@@ -21,31 +21,29 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'SG 9/6/2023 22:33:35'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'v 9/7/2023 15:41:20'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| customerBook timeTakenToAddCustomer |
+	| customerBook |
 	
 	customerBook := CustomerBook new.
 
-	timeTakenToAddCustomer := self timeTakenWhen: [customerBook addCustomerNamed: 'John Lennon'].
-	
-	self assertThat: timeTakenToAddCustomer isLessThan: (50 * millisecond).
+	self assertThatExecution: [customerBook addCustomerNamed: 'John Lennon'] lastsLessThanTimeInMiliseconds: (50 * millisecond).
+
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'SG 9/6/2023 22:34:34'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'v 9/7/2023 15:41:08'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
-	| customerBook timeTakenToRemoveCustomer |
+	| customerBook |
 	
 	customerBook := CustomerBook new.
 	
 	customerBook addCustomerNamed: 'Paul McCartney'.
 	 
-	timeTakenToRemoveCustomer := self timeTakenWhen: [customerBook removeCustomerNamed: 'Paul McCartney'.].
+	self assertThatExecution:  [customerBook removeCustomerNamed: 'Paul McCartney'.] lastsLessThanTimeInMiliseconds: (100 * millisecond).
 	
-	self assertThat: timeTakenToRemoveCustomer isLessThan: (100 * millisecond).
 	
 ! !
 
@@ -78,14 +76,14 @@ test04CanNotRemoveAnInvalidCustomer
 
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'SG 9/6/2023 21:18:58'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'v 9/7/2023 13:39:10'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 
 	| customerBook |
 	
 	customerBook := CustomerBook new.
 	
-	self addThenSuspendTheCustomer: 'Paul McCartney' FromTheBook: customerBook.
+	self addThenSuspendCustomer: 'Paul McCartney' FromTheBook: customerBook.
 	
 	self assertThatTheBook: customerBook hasActiveValue: 0 SuspendedValue: 1 TotalValue: 1.
 	self assert: (customerBook includesCustomerNamed: 'Paul McCartney').
@@ -94,13 +92,13 @@ test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'SG 9/6/2023 21:18:59'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'v 9/7/2023 13:39:15'!
 test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 
 	| customerBook |
 	
 	customerBook := CustomerBook new.
-	self addThenSuspendTheCustomer: 'Paul McCartney' FromTheBook: customerBook.
+	self addThenSuspendCustomer: 'Paul McCartney' FromTheBook: customerBook.
 	
 	customerBook removeCustomerNamed: 'Paul McCartney'.
 	
@@ -125,13 +123,13 @@ test07CanNotSuspendAnInvalidCustomer
 
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'SG 9/6/2023 22:12:13'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'v 9/7/2023 13:39:20'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
 	| customerBook |
 			
 	customerBook := CustomerBook new.
-	self addThenSuspendTheCustomer: 'John Lennon' FromTheBook: customerBook.
+	self addThenSuspendCustomer: 'John Lennon' FromTheBook: customerBook.
 
 	self assertThat:	[ customerBook suspendCustomerNamed: 'John Lennon'.] 
 		failsOn: CantSuspend 
@@ -139,10 +137,10 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 ! !
 
 
-!CustomerBookTest methodsFor: 'assertions' stamp: 'SG 9/6/2023 22:37:05'!
-assertThat: aCustomerBookAction failsOn: anErrorType andDoes: aBookAssertion
+!CustomerBookTest methodsFor: 'assertions' stamp: 'v 9/7/2023 13:50:33'!
+assertThat: aCustomerBookExecution failsOn: anErrorType andDoes: aBookAssertion
 	
-	[aCustomerBookAction value.
+	[aCustomerBookExecution value.
 		self fail]
 		on: anErrorType 
 		do: aBookAssertion. 
@@ -150,19 +148,25 @@ assertThat: aCustomerBookAction failsOn: anErrorType andDoes: aBookAssertion
 
 ! !
 
-!CustomerBookTest methodsFor: 'assertions' stamp: 'SG 9/6/2023 22:37:25'!
-assertThat: aValue isLessThan: anotherValue
-
-	self assert: (aValue < anotherValue	).
+!CustomerBookTest methodsFor: 'assertions' stamp: 'v 9/7/2023 15:41:29'!
+assertThatExecution: aCustomerBookExecution lastsLessThanTimeInMiliseconds: anAmountInMilliseconds
+	| timeBeforeExecution timeAfterExecution |
+	
+	timeBeforeExecution := Time millisecondClockValue * millisecond.
+	aCustomerBookExecution value.
+	timeAfterExecution := Time millisecondClockValue * millisecond.
+	
+	self assert: ((timeAfterExecution-timeBeforeExecution) < anAmountInMilliseconds).
 	
 ! !
 
-!CustomerBookTest methodsFor: 'assertions' stamp: 'SG 9/6/2023 22:37:39'!
+!CustomerBookTest methodsFor: 'assertions' stamp: 'v 9/7/2023 14:10:36'!
 assertThatTheBook: aCustomerBook hasActiveValue: anActiveValue SuspendedValue: aSuspendedValue TotalValue: aTotalValue.
 
 	    self assert: anActiveValue equals: aCustomerBook numberOfActiveCustomers.
 	    self assert: aSuspendedValue equals: aCustomerBook numberOfSuspendedCustomers.
 	    self assert: aTotalValue equals: aCustomerBook numberOfCustomers.
+	
 	
 
 	
@@ -176,24 +180,12 @@ assertThatTheBook: aCustomerBook hasOnlyThisCustomer: aCostumer
 ! !
 
 
-!CustomerBookTest methodsFor: 'accessing' stamp: 'SG 9/6/2023 22:26:15'!
-addThenSuspendTheCustomer: aCustomer FromTheBook: aCustomerBook
+!CustomerBookTest methodsFor: 'accessing' stamp: 'v 9/7/2023 13:35:49'!
+addThenSuspendCustomer: aCustomer FromTheBook: aCustomerBook
 	aCustomerBook addCustomerNamed: aCustomer.
 	aCustomerBook suspendCustomerNamed: aCustomer.
 	
 	! !
-
-!CustomerBookTest methodsFor: 'accessing' stamp: 'SG 9/6/2023 22:35:50'!
-timeTakenWhen: aCustomerBookAction
-	| timeBeforeAction timeAfterAction |
-	
-	timeBeforeAction := Time millisecondClockValue * millisecond.
-	aCustomerBookAction value.
-	timeAfterAction := Time millisecondClockValue * millisecond.
-	
-	^ (timeAfterAction-timeBeforeAction).
-	
-! !
 
 
 !classDefinition: #CustomerBook category: 'CodigoRepetido-Ejercicio'!
@@ -277,6 +269,11 @@ suspendCustomerNamed: aName
 !CustomerBook methodsFor: 'news' stamp: 'SG 9/6/2023 22:50:09'!
 customerNameInBook: aName
 
+	^(active includes: aName) or: [suspended includes: aName].! !
+
+!CustomerBook methodsFor: 'news' stamp: 'v 9/6/2023 19:35:46'!
+customerNameInCustomerBook: aName
+	"nameInCustomerBook o customerInCustomerBook o customerNameInCustomerBook"
 	^(active includes: aName) or: [suspended includes: aName].! !
 
 !CustomerBook methodsFor: 'news' stamp: 'SG 9/6/2023 22:51:39'!
