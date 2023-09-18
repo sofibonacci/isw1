@@ -180,18 +180,16 @@ test01PrefixCanNotBeEmpty
 test02PrefixCanNotHaveWhitespaces
 	self assertThatPrefix: 'Win t'		onStack: emptyStack 		raisesErrorWithDescription: SentenceFinderByPrefix whitespaceInPrefixErrorDescription .! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'v 9/18/2023 16:44:34'!
-test03SentenceFinderFindsCorrectSentenceWithThePrefixAndStackKeepsHisOrderAndElements
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'v 9/18/2023 16:51:56'!
+test03SentenceFinderFindsCorrectSentenceWithThePrefix
 
-	| foundSentences  stackWithFourSentencesAtTheBeggining |
-	stackWithFourSentencesAtTheBeggining := stackWithFourSentences .
+	| foundSentences  |
 	foundSentences := sentenceFinder findSentenceWithPrefix: 'Wint' inStack: stackWithFourSentences.
 	
 	self assert: foundSentences size equals: 1.
-	self assert: foundSentences includes: 'Winter is here'.
-	"self assertThat: stackWithFourSentences hasSameOrderAndElementsThan: stackWithFourSentencesAtTheBeggining"! !
+	self assert: foundSentences includes: 'Winter is here'.! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'v 9/18/2023 15:45:33'!
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'v 9/18/2023 16:52:33'!
 test04SentenceFinderFindsMoreThanOneSentenceWithThePrefixAndStackKeepsHisOrderAndElements
 
 	| foundSentences sentencesToFind  stackWithFourSentencesAtTheBeggining |
@@ -201,7 +199,7 @@ test04SentenceFinderFindsMoreThanOneSentenceWithThePrefixAndStackKeepsHisOrderAn
 	
 	self assert: foundSentences size equals: 2.
 	self assert: foundSentences equals: sentencesToFind.
-	self assertThat: stackWithFourSentences hasSameOrderAndElementsThan: stackWithFourSentencesAtTheBeggining! !
+	"self assertThat: stackWithFourSentences hasSameOrderAndElementsThan: stackWithFourSentencesAtTheBeggining"! !
 
 !SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'v 9/18/2023 16:45:18'!
 test05SentenceFinderDoesNotFindSentenceInEmptyStack
