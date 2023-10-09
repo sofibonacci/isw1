@@ -5,8 +5,8 @@ TestCase subclass: #MarsRoverTest
 	poolDictionaries: ''
 	category: 'Mars Rover'!
 
-!MarsRoverTest methodsFor: 'Zero' stamp: 'SG 10/9/2023 01:58:17'!
-testZero
+!MarsRoverTest methodsFor: 'Zero' stamp: 'SG 10/7/2023 17:33:12'!
+test01Zero
 	
 	| rover |
 	
@@ -17,8 +17,30 @@ testZero
 	self assert: [rover isInPosition: (0@0) facing: North new].! !
 
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:26'!
-testOneBackNorth
+!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/7/2023 17:36:24'!
+test02OneEastRight
+	
+	| rover |
+	
+	rover := MarsRover new withPosition: 0@0 facing: East new.
+	
+	rover runCommands: 'r'.
+	
+	self assert: [rover isInPosition: (0@0) facing: South new].! !
+
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 11:59:33'!
+test03OneEastLeft
+	
+	| rover |
+	
+	rover := MarsRover new withPosition: 0@0 facing: East new.
+	
+	rover runCommands: 'l'.
+	
+	self assert: [rover isInPosition: (0@0) facing: North new].! !
+
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 11:59:52'!
+test04OneBackNorth
 	
 	| rover |
 	
@@ -28,30 +50,8 @@ testOneBackNorth
 	
 	self assert: [rover isInPosition: (0@-1) facing: North new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:32'!
-testOneEastLeft
-	
-	| rover |
-	
-	rover := MarsRover new withPosition: 0@0 facing: East new.
-	
-	rover runCommands: 'l'.
-	
-	self assert: [rover isInPosition: (0@0) facing: North new].! !
-
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:39'!
-testOneEastRight
-	
-	| rover |
-	
-	rover := MarsRover new withPosition: 0@0 facing: East new.
-	
-	rover runCommands: 'r'.
-	
-	self assert: [rover isInPosition: (0@0) facing: South new].! !
-
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:44'!
-testOneForwardNorth
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:00:41'!
+test05OneForwardNorth
 	
 	| rover |
 	
@@ -61,8 +61,8 @@ testOneForwardNorth
 	
 	self assert: [rover isInPosition: (0@1) facing: North new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:50'!
-testOneNorthLeft
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:00:50'!
+test06OneNorthLeft
 	
 	| rover |
 	
@@ -72,8 +72,8 @@ testOneNorthLeft
 	
 	self assert: [rover isInPosition: (0@0) facing: West new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:58:57'!
-testOneNorthRight
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:00:58'!
+test07OneNorthRight
 	
 	| rover |
 	
@@ -83,8 +83,8 @@ testOneNorthRight
 	
 	self assert: [rover isInPosition: (0@0) facing: East new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:59:02'!
-testOneSouthLeft
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:02:41'!
+test08OneSouthLeft
 	
 	| rover |
 	
@@ -94,8 +94,8 @@ testOneSouthLeft
 	
 	self assert: [rover isInPosition: (0@0) facing: East new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:59:10'!
-testOneSouthRight
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:02:53'!
+test09OneSouthRight
 	
 	| rover |
 	
@@ -105,8 +105,8 @@ testOneSouthRight
 	
 	self assert: [rover isInPosition: (0@0) facing: West new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:59:16'!
-testOneWestLeft
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:03:02'!
+test10OneWestLeft
 	
 	| rover |
 	
@@ -116,8 +116,8 @@ testOneWestLeft
 	
 	self assert: [rover isInPosition: (0@0) facing: South new].! !
 
-!MarsRoverTest methodsFor: 'One' stamp: 'SG 10/9/2023 01:59:22'!
-testOneWestRight
+!MarsRoverTest methodsFor: 'One' stamp: 'VA 10/9/2023 12:03:11'!
+test11OneWestRight
 	
 	| rover |
 	
@@ -128,8 +128,8 @@ testOneWestRight
 	self assert: [rover isInPosition: (0@0) facing: North new].! !
 
 
-!MarsRoverTest methodsFor: 'Many' stamp: 'SG 10/9/2023 01:59:47'!
-test02ForwardNorth
+!MarsRoverTest methodsFor: 'Many' stamp: 'VA 10/9/2023 12:03:30'!
+test12TwoForwardNorth
 	
 	| rover |
 	
@@ -139,38 +139,31 @@ test02ForwardNorth
 	
 	self assert: [rover isInPosition: (0@2) facing: North new].! !
 
-!MarsRoverTest methodsFor: 'Many' stamp: 'SG 10/9/2023 01:59:57'!
-test02LeftFromNorth
-
-	| rover |
-
-	rover := MarsRover new withPosition: 0@0 facing: North new.
-
-	rover runCommands: 'll'.
-
-	self assert: [rover isInPosition: (0@0) facing: South new].! !
-
-!MarsRoverTest methodsFor: 'Many' stamp: 'SG 10/9/2023 02:00:08'!
-testInvalidCommand
+!MarsRoverTest methodsFor: 'Many' stamp: 'VA 10/9/2023 12:43:12'!
+test13InvalidCommand
 	
 	| rover |
 	
 	rover := MarsRover new withPosition: 0@0 facing: North new.
 	
-	rover runCommands: 'fqf'.
 	
-	self assert: [rover isInPosition: (0@1) facing: North new].! !
+	self should: [rover runCommands: 'fqf'.] 
+		raise: Error 
+		withExceptionDo: [:anError |
+			self assert:(MarsRover invalidCommandDescription) equals:(anError messageText)	.
+			self assert: (rover isInPosition: (0@1) facing: North new).
+	].! !
 
-!MarsRoverTest methodsFor: 'Many' stamp: 'SG 10/9/2023 02:00:14'!
-testManyInstructions
-
+!MarsRoverTest methodsFor: 'Many' stamp: 'VA 10/9/2023 13:26:19'!
+test14ManyInstructions
+	
 	| rover |
-
+	
 	rover := MarsRover new withPosition: 0@0 facing: North new.
-
-	rover runCommands: 'ffblfffblffblffblbbblr' .
-
-	self assert: [rover isInPosition: -1@ -3 facing: North new].! !
+	
+	rover runCommands: 'fffbblfbr'.
+	
+	self assert: [rover isInPosition: 0@1 facing: North new].! !
 
 
 !classDefinition: #CardinalPoint category: 'Mars Rover'!
@@ -219,9 +212,9 @@ forward
 	^ 1@0! !
 
 
-!East methodsFor: 'turning' stamp: 'SG 10/9/2023 01:54:31'!
+!East methodsFor: 'turning' stamp: 'SG 10/7/2023 19:29:16'!
 left
-	^ North new.
+	^ North new
 ! !
 
 !East methodsFor: 'turning' stamp: 'SG 10/7/2023 19:29:23'!
@@ -325,8 +318,11 @@ moveBackwards
 moveForward
 	^ position := position + (facing forward)! !
 
-!MarsRover methodsFor: 'running' stamp: 'SG 10/9/2023 01:53:46'!
-runCommands: aListOfCommands
+!MarsRover methodsFor: 'running' stamp: 'VA 10/9/2023 00:56:11'!
+runCommand: aCommand
+	(MarsRoverCommand with: aCommand) runOver: self.
+	
+"
 	aListOfCommands do: [:aCommand |
 		(aCommand = $f) ifTrue: [self moveForward] ifFalse: [
 			(aCommand = $b) ifTrue: [self moveBackwards] ifFalse:
@@ -334,9 +330,26 @@ runCommands: aListOfCommands
 							(aCommand = $r) ifTrue: [	self turnRight] ifFalse: [^self].
 					]
 				]
+
 			]
 		]
-! !
+"! !
+
+!MarsRover methodsFor: 'running' stamp: 'VA 10/9/2023 00:51:10'!
+runCommands: aListOfCommands
+	aListOfCommands do: [:aCommand | self runCommand: aCommand ].
+"
+	aListOfCommands do: [:aCommand |
+		(aCommand = $f) ifTrue: [self moveForward] ifFalse: [
+			(aCommand = $b) ifTrue: [self moveBackwards] ifFalse:
+						[(aCommand = $l) ifTrue: [self turnLeft] ifFalse: [
+							(aCommand = $r) ifTrue: [	self turnRight] ifFalse: [^self].
+					]
+				]
+
+			]
+		]
+"! !
 
 !MarsRover methodsFor: 'running' stamp: 'SG 10/7/2023 19:31:20'!
 turnLeft
@@ -350,3 +363,171 @@ turnRight
 !MarsRover methodsFor: 'accessing' stamp: 'SG 10/7/2023 19:30:12'!
 isInPosition: aPosition facing: aCardinalPoint
 	^ (position = aPosition) and: (facing = aCardinalPoint).! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRover class' category: 'Mars Rover'!
+MarsRover class
+	instanceVariableNames: ''!
+
+!MarsRover class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:30:28'!
+invalidCommandDescription
+	^'Comando invalido'! !
+
+
+!classDefinition: #MarsRoverCommand category: 'Mars Rover'!
+Object subclass: #MarsRoverCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!MarsRoverCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 11:59:06'!
+runOver: aMarsRover
+	self subclassResponsibility .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverCommand class' category: 'Mars Rover'!
+MarsRoverCommand class
+	instanceVariableNames: ''!
+
+!MarsRoverCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:10:33'!
+canHandle: aMarsRoverCommand
+	self subclassResponsibility ! !
+
+!MarsRoverCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 13:10:44'!
+with: aMarsRoverCommand
+	^(self allSubclasses detect:[:aMarsRoverCommandClass | aMarsRoverCommandClass canHandle: aMarsRoverCommand]) new.! !
+
+
+!classDefinition: #InvalidCommand category: 'Mars Rover'!
+MarsRoverCommand subclass: #InvalidCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!InvalidCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:29:34'!
+runOver: aMarsRover
+	self error: (aMarsRover class invalidCommandDescription )! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'InvalidCommand class' category: 'Mars Rover'!
+InvalidCommand class
+	instanceVariableNames: ''!
+
+!InvalidCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:21:22'!
+canHandle: aCommand
+	^(aCommand = $b or: (aCommand = $f or: (aCommand = $l or: (aCommand = $r)) )) not.! !
+
+
+!classDefinition: #ValidCommand category: 'Mars Rover'!
+MarsRoverCommand subclass: #ValidCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!ValidCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 13:00:19'!
+runOver: aMarsRover
+	self subclassResponsibility .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ValidCommand class' category: 'Mars Rover'!
+ValidCommand class
+	instanceVariableNames: ''!
+
+!ValidCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 13:12:21'!
+canHandle: aMarsRoverCommand
+	^false! !
+
+
+!classDefinition: #BackwardCommand category: 'Mars Rover'!
+ValidCommand subclass: #BackwardCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!BackwardCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:23:07'!
+runOver: aMarsRover
+	aMarsRover moveBackwards .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'BackwardCommand class' category: 'Mars Rover'!
+BackwardCommand class
+	instanceVariableNames: ''!
+
+!BackwardCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:14:40'!
+canHandle: aCommand
+	^aCommand = $b.! !
+
+
+!classDefinition: #ForwardCommand category: 'Mars Rover'!
+ValidCommand subclass: #ForwardCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!ForwardCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:27:52'!
+runOver: aMarsRover
+	aMarsRover moveForward .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ForwardCommand class' category: 'Mars Rover'!
+ForwardCommand class
+	instanceVariableNames: ''!
+
+!ForwardCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:18:09'!
+canHandle: aCommand
+	^aCommand = $f.! !
+
+
+!classDefinition: #LeftCommand category: 'Mars Rover'!
+ValidCommand subclass: #LeftCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!LeftCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:28:06'!
+runOver: aMarsRover
+	aMarsRover turnLeft .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'LeftCommand class' category: 'Mars Rover'!
+LeftCommand class
+	instanceVariableNames: ''!
+
+!LeftCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:18:45'!
+canHandle: aCommand
+	^aCommand = $l.! !
+
+
+!classDefinition: #RightCommand category: 'Mars Rover'!
+ValidCommand subclass: #RightCommand
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Mars Rover'!
+
+!RightCommand methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:28:20'!
+runOver: aMarsRover
+	aMarsRover turnRight .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'RightCommand class' category: 'Mars Rover'!
+RightCommand class
+	instanceVariableNames: ''!
+
+!RightCommand class methodsFor: 'as yet unclassified' stamp: 'VA 10/9/2023 01:18:37'!
+canHandle: aCommand
+	^aCommand = $r.! !
