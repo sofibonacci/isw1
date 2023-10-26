@@ -377,8 +377,8 @@ TestCase subclass: #SummaryReportTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 10:51:45'!
-test01
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:51:33'!
+test01ReceptiveAccountEmptyHasBalanceZeroInSummaryReport
 	| account summary |
 	account := ReceptiveAccount new.
 	summary := AccountSummary of: account .
@@ -388,8 +388,8 @@ test01
 	
 ! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/25/2023 23:43:52'!
-test02
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:51:56'!
+test02AccountWithDepositShowsInSummaryReport
 	| account summary |
 	account := ReceptiveAccount new.
 	Deposit register: 100 on: account .
@@ -400,8 +400,8 @@ test02
 	
 ! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 11:03:45'!
-test03
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:52:09'!
+test03AccountWithDepositAndWithdrawShowsInSummaryReport
 	| account summary |
 	account := ReceptiveAccount new.
 	Deposit register: 100 on: account .
@@ -412,8 +412,8 @@ test03
 	
 ! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 11:08:34'!
-test04
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:52:23'!
+test04AccountWithDepositAndWithdrawAndEntryTransferShowsInSummaryReport
 	| account destinationAccount summary |
 	account := ReceptiveAccount new.
 	destinationAccount := ReceptiveAccount new.
@@ -426,8 +426,8 @@ test04
 	
 ! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 11:10:42'!
-test05
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:53:15'!
+test05AccountWithDepositAndWithdrawAndEntryTransferAndExitTransferShowsInSummaryReport
 	| account destinationAccount sourceAccount summary |
 	account := ReceptiveAccount new.
 	destinationAccount := ReceptiveAccount new.
@@ -442,8 +442,8 @@ test05
 	
 ! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 11:44:06'!
-test06ReportOfEmptyPortfolio
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:54:03'!
+test06EmptyPortfolioHasBalanceZeroInSummaryReport
 	| summary portfolio |
 	
 	portfolio:= Portfolio new. 
@@ -452,8 +452,8 @@ test06ReportOfEmptyPortfolio
 		assert: 'Balance = 0'
 		equals: summary report.! !
 
-!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 11:58:03'!
-test07ReportOfPortfolioWithAccount
+!SummaryReportTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:54:17'!
+test07PortfolioWithAccountShowsCorrectTransactions
 	| summary portfolio account |
 	account := ReceptiveAccount new.
 	Deposit register: 100 on: account .
@@ -489,8 +489,8 @@ TestCase subclass: #TransferNetTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'SG 10/26/2023 14:37:32'!
-test01
+!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:49:42'!
+test01EmptyReceptiveAccountHas0TotalNet
 	| account totalNet|
 	
 	account := ReceptiveAccount new.
@@ -500,8 +500,8 @@ test01
 	self assert:  0 equals: totalNet report.
 	! !
 
-!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'SG 10/26/2023 14:37:40'!
-test02
+!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:49:53'!
+test02AccountWithOneIncomingTransferComputesTotalNet
 	| sourceAccount destinationAccount totalNet|
 	
 	sourceAccount := ReceptiveAccount new.	
@@ -514,8 +514,8 @@ test02
 	self assert: 20 equals: totalNet report.
 	! !
 
-!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'SG 10/26/2023 14:37:45'!
-test03
+!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:50:15'!
+test03AccountWithOneIncomingAndExitTransferComputesTotalNet
 	| sourceAccount destinationAccount totalNet|
 	
 	sourceAccount := ReceptiveAccount new.	
@@ -528,8 +528,8 @@ test03
 	self assert: 15 equals: totalNet report.
 	! !
 
-!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'SG 10/26/2023 14:38:44'!
-test04
+!TransferNetTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:50:29'!
+test04DepositAndWithdrawDoesntAffectTotalNet
 	| sourceAccount destinationAccount totalNet|
 	
 	sourceAccount := ReceptiveAccount new.	
@@ -598,8 +598,8 @@ TestCase subclass: #TransferTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferTest methodsFor: 'as yet unclassified' stamp: 'VA 10/20/2023 23:03:11'!
-test01
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'VA 10/26/2023 16:51:21'!
+test01AccountsOfTransferHaveCorrectBalance
 	|transfer destinationAccount sourceAccount amount|
 	destinationAccount := ReceptiveAccount new.
 	sourceAccount := ReceptiveAccount new.
