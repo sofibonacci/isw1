@@ -317,15 +317,37 @@ test04WindowShowsHeadingAfterChange
 	self assert: headingWindow show equals: 'Apuntando al Este' .
 	! !
 
-!MarsRoverWindowTest methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 14:15:39'!
-test05WindowShowsHeadingAndPositionAfterChange
+!MarsRoverWindowTest methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 16:47:59'!
+test05WindowShowsPositionAfterChangeWithoutHeadingChange
 	| marsRover headingpositionWindow |
 	
 	marsRover:=MarsRover at: 1@1 heading: MarsRoverHeadingNorth.
 	headingpositionWindow := MarsRoverHeadingPositionWindow subscribingTo: marsRover .
-	marsRover process: 'r'.
+	marsRover process: 'f'.
 	
-	self assert: headingpositionWindow show equals: (OrderedCollection with:1@2 with:'Apuntando al Este' ).
+	self assert: headingpositionWindow show equals: ('1@2').
+	! !
+
+!MarsRoverWindowTest methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 16:49:40'!
+test06WindowShowsHeadingAndPositionAfterChange
+	| marsRover headingpositionWindow |
+	
+	marsRover:=MarsRover at: 1@1 heading: MarsRoverHeadingNorth.
+	headingpositionWindow := MarsRoverHeadingPositionWindow subscribingTo: marsRover .
+	marsRover process: 'fr'.
+	
+	self assert: headingpositionWindow show equals: ('Apuntando al Este','1@2').
+	! !
+
+!MarsRoverWindowTest methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 16:50:04'!
+test07WindowShowsHeadingPositionAfterManyChanges
+	| marsRover headingpositionWindow |
+	
+	marsRover:=MarsRover at: 1@1 heading: MarsRoverHeadingNorth.
+	headingpositionWindow := MarsRoverHeadingPositionWindow subscribingTo: marsRover .
+	marsRover process: 'frf'.
+	
+	self assert: headingpositionWindow show equals: ('Apuntando al Este','2@2').
 	! !
 
 
@@ -487,16 +509,16 @@ showPosition
 	^position.! !
 
 
-!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 13:52:19'!
-registerHeadingLog: aMarsRoverHeading
+!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 16:52:31'!
+registerHeadingObserver: aMarsRoverHeading
 	observer := aMarsRoverHeading.! !
 
-!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 14:10:03'!
-registerHeadingPositionLog: aMarsRoverHeadingPositionLog 
+!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 16:53:01'!
+registerHeadingPositionObserver: aMarsRoverHeadingPositionLog 
 	observer := aMarsRoverHeadingPositionLog ! !
 
-!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 13:52:28'!
-registerPositionLog: aMarsRoverPosition
+!MarsRover methodsFor: 'logProcess' stamp: 'VA 10/30/2023 16:53:14'!
+registerPositionObserver: aMarsRoverPosition
 	observer := aMarsRoverPosition.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -686,6 +708,14 @@ Object subclass: #MarsRoverObserver
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
+!MarsRoverObserver methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 16:51:46'!
+updateHeadingWith: aHeading
+	self subclassResponsibility ! !
+
+!MarsRoverObserver methodsFor: 'as yet unclassified' stamp: 'VA 10/30/2023 16:51:38'!
+updatePositionWith: aPosition 
+	self subclassResponsibility ! !
+
 
 !classDefinition: #MarsRoverLog category: 'MarsRover-WithHeading'!
 MarsRoverObserver subclass: #MarsRoverLog
@@ -718,11 +748,11 @@ MarsRoverLog subclass: #MarsRoverHeadingLog
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverHeadingLog methodsFor: 'initialize' stamp: 'VA 10/30/2023 11:49:24'!
+!MarsRoverHeadingLog methodsFor: 'initialize' stamp: 'VA 10/30/2023 16:52:31'!
 initializeSubscribingTo: aMarsRover 
 	
 	marsRover := aMarsRover.
-	marsRover registerHeadingLog: self.
+	marsRover registerHeadingObserver: self.
 	log := OrderedCollection new.! !
 
 
@@ -759,11 +789,11 @@ MarsRoverLog subclass: #MarsRoverHeadingPositionLog
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverHeadingPositionLog methodsFor: 'initialize' stamp: 'VA 10/30/2023 14:09:36'!
+!MarsRoverHeadingPositionLog methodsFor: 'initialize' stamp: 'VA 10/30/2023 16:53:01'!
 initializeSubscribingTo: aMarsRover 
 	
 	marsRover := aMarsRover.
-	marsRover registerHeadingPositionLog: self.
+	marsRover registerHeadingPositionObserver: self.
 	log:= OrderedCollection new.! !
 
 !MarsRoverHeadingPositionLog methodsFor: 'initialize' stamp: 'VA 10/30/2023 14:11:13'!
@@ -805,11 +835,11 @@ MarsRoverLog subclass: #MarsRoverPositionLog
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverPositionLog methodsFor: 'initialization' stamp: 'VA 10/30/2023 11:11:47'!
+!MarsRoverPositionLog methodsFor: 'initialization' stamp: 'VA 10/30/2023 16:53:14'!
 initializeSubscribingTo: aMarsRover 
 	
 	marsRover := aMarsRover.
-	marsRover registerPositionLog: self.
+	marsRover registerPositionObserver: self.
 	log := OrderedCollection new.! !
 
 !MarsRoverPositionLog methodsFor: 'initialization' stamp: 'VA 10/30/2023 13:30:10'!
@@ -846,33 +876,34 @@ MarsRoverObserver subclass: #MarsRoverWindow
 
 !classDefinition: #MarsRoverHeadingPositionWindow category: 'MarsRover-WithHeading'!
 MarsRoverWindow subclass: #MarsRoverHeadingPositionWindow
-	instanceVariableNames: 'marsRover window'
-	classVariableNames: ''
+	instanceVariableNames: 'marsRover window headingWindow positionWindow'
+	classVariableNames: 'Headingwindow'
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverHeadingPositionWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 14:17:20'!
+!MarsRoverHeadingPositionWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 16:53:01'!
 initializeSubscribingTo: aMarsRover 
 	
 	marsRover := aMarsRover.
-	marsRover registerHeadingPositionLog: self.
-	window:= OrderedCollection new.! !
+	marsRover registerHeadingPositionObserver: self.
+	positionWindow:= ''.
+	headingWindow :=''.! !
 
 
-!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 14:17:57'!
+!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 16:44:22'!
 show
-	^window ! !
+	^headingWindow, positionWindow ! !
 
-!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 14:18:41'!
+!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 16:41:33'!
 updateHeadingWith: aHeading
-	(aHeading isKindOf: MarsRoverHeadingEast )ifTrue: [ window add:'Apuntando al Este'].
-	(aHeading isKindOf: MarsRoverHeadingNorth ) ifTrue: [ window add:'Apuntando al Norte'].
-	(aHeading isKindOf: MarsRoverHeadingSouth ) ifTrue: [ window add: 'Apuntando al Sur'] .
-	(aHeading isKindOf: MarsRoverHeadingWest )ifTrue: [window add:'Apuntando al Oeste'].! !
+	(aHeading isKindOf: MarsRoverHeadingEast )ifTrue: [ headingWindow :='Apuntando al Este'].
+	(aHeading isKindOf: MarsRoverHeadingNorth ) ifTrue: [ headingWindow :='Apuntando al Norte'].
+	(aHeading isKindOf: MarsRoverHeadingSouth ) ifTrue: [ headingWindow := 'Apuntando al Sur'] .
+	(aHeading isKindOf: MarsRoverHeadingWest )ifTrue: [headingWindow :='Apuntando al Oeste'].! !
 
-!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 14:19:36'!
+!MarsRoverHeadingPositionWindow methodsFor: 'window' stamp: 'VA 10/30/2023 16:44:46'!
 updatePositionWith: aPosition 
-	window add: aPosition .! !
+	positionWindow := (aPosition asString) .! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -893,10 +924,10 @@ MarsRoverWindow subclass: #MarsRoverHeadingWindow
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverHeadingWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 13:48:31'!
+!MarsRoverHeadingWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 16:52:31'!
 initializeSubscribingTo: aMarsRover 
 	marsRover := aMarsRover.
-	marsRover registerHeadingLog: self.
+	marsRover registerHeadingObserver: self.
 	valueToShow:=''.! !
 
 
@@ -933,10 +964,10 @@ MarsRoverWindow subclass: #MarsRoverPositionWindow
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverPositionWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 13:46:12'!
+!MarsRoverPositionWindow methodsFor: 'initialization' stamp: 'VA 10/30/2023 16:53:14'!
 initializeSubscribingTo: aMarsRover 
 	marsRover := aMarsRover.
-	marsRover registerPositionLog: self.
+	marsRover registerPositionObserver: self.
 	valueToShow :=''.! !
 
 
